@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A suggestion box with a note being dropped into the slot">
+<rect width="400" height="500" fill="#BCFEFE"/>
+<rect y="396" width="400" height="104" fill="#2D99AE"/>
+<line x1="0" y1="396" x2="400" y2="396" stroke="#001C44" stroke-width="4"/>
+<ellipse cx="200" cy="404" rx="118" ry="9" fill="#001C44" opacity=".22"/>
+<g stroke="#001C44" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+  <g transform="rotate(-7 200 190)">
+    <rect x="166" y="120" width="68" height="112" rx="4" fill="#fff"/>
+    <line x1="180" y1="144" x2="220" y2="144"/><line x1="180" y1="162" x2="212" y2="162"/><line x1="180" y1="180" x2="218" y2="180"/>
+  </g>
+  <rect x="108" y="244" width="184" height="152" rx="8" fill="#0C5776"/>
+  <rect x="96" y="226" width="208" height="30" rx="8" fill="#2D99AE"/>
+  <line x1="150" y1="241" x2="250" y2="241" stroke-width="7"/>
+  <rect x="140" y="290" width="120" height="76" rx="6" fill="#fff"/>
+  <path d="M200 302v26M187 315h26" stroke="#2D99AE" stroke-width="9" fill="none"/>
+  <line x1="158" y1="347" x2="242" y2="347" stroke-width="3"/>
+  <g transform="translate(-96 -18) rotate(-6 250 440)">
+    <rect x="198" y="432" width="100" height="16" rx="3" fill="#F8DAD0"/>
+    <path d="M298 432l24 8-24 8z" fill="#fff"/><path d="M312 437.4l10 2.6-10 2.6z" fill="#001C44" stroke-width="1"/>
+    <line x1="216" y1="432" x2="216" y2="448" stroke-width="3"/>
+  </g>
+</g>
+<g stroke="#001C44" stroke-width="4" stroke-linecap="round" fill="none">
+  <path d="M96 150v22M85 161h22"/><path d="M318 110v16M310 118h16" stroke-width="3"/><path d="M62 258v12M56 264h12" stroke-width="3"/>
+</g>
+</svg>
