@@ -1,0 +1,67 @@
+/* ===== calm.css — loaded last. Toned-down motion: simple fade transition, no cursor effects ===== */
+
+/* page transition = plain quick fade */
+.wipe, .wipe[data-tr] {
+  transform: none !important; border-radius: 0 !important; clip-path: none !important;
+  background: var(--mist, #f2fbfc) !important; opacity: 0; backdrop-filter: none;
+  transition: opacity .22s ease !important;
+}
+body.leaving .wipe { opacity: 1; }
+.wipe-center { display: none !important; }
+body { animation: none !important; }
+body.arriving { animation: none !important; }
+
+/* no cursor-follow glow, no click ripple */
+.cursor-glow, .ripple { display: none !important; }
+
+/* load / scroll reveals: soft fade only, no sliding sideways, no blur, no spring */
+main > *, .page-banner, .home-banner, .nav-links li,
+.section-head h2, .hero-stats dt, .stat dt, .auth-panel, .modal-card,
+.lp-copy h1, .lp-copy p, .lp-copy .kicker, .lp-actions, .home-banner .hb-img, .hb-copy h1 {
+  animation: none !important;
+}
+.js .reveal, .js .reveal:nth-child(odd), .js .reveal:nth-child(even),
+.js .service-card.reveal, .js .service-card.reveal:nth-child(odd), .js .service-card.reveal:nth-child(even),
+.reveal-on, .reveal-on:nth-child(odd), .reveal-on:nth-child(even) {
+  transform: none !important; transition: opacity .5s ease !important;
+}
+.js .reveal.in, .reveal-on.in { transform: none !important; }
+
+/* stop the endless floating / drifting / spinning decorations */
+.fx-bg, .blob, .lc-orb, .lc-ring, .lp-scroll { display: none !important; }
+.chip.c1, .chip.c2, .lc-card, .cta-art, .pb-art, .sec-art, .vf-ico,
+.cta-box::before, .ct-about::before, .lp-clinic::before {
+  animation: none !important;
+}
+/* heartbeat kept: logo beat, ECG lines, shield/emergency icon beat, footer colour bar */
+
+/* gentler hovers: no tilt, rotate or big scale */
+.btn-primary:hover, .btn-outline:hover, .btn-ghost:hover, .ct-911:hover, .ct-911:focus-visible { transform: translateY(-2px) !important; }
+.lp-img:hover, .team-grid figure:hover img { transform: none !important; }
+.dept-card:hover img, .service-card:hover .service-photo img { transform: scale(1.03) !important; }
+.service-card:hover .service-icon, .ct-card:hover .ct-ico { transform: none !important; }
+.my-chip:hover, .ct-points li:hover { transform: none !important; }
+
+/* "Ready to skip the line?" box: smaller */
+.cta-section { padding-top: 8px !important; padding-bottom: 40px !important; }
+.cta-box { padding: 26px 28px !important; }
+.cta-box h2 { font-size: clamp(1.3rem, 2.4vw, 1.7rem) !important; margin: 0 0 4px; }
+.cta-box p { margin: 0 0 14px; }
+.cta-art { width: clamp(80px, 11vw, 130px) !important; }
+.cta-box .btn-lg { padding: 11px 26px; font-size: 1rem; }
+
+/* footer tidy-up */
+.pro-footer > .container { overflow: hidden; }
+.pro-footer > .container::before { z-index: 1; }
+.pf-brand .pf-chips { max-width: 520px; flex-wrap: nowrap; gap: 8px; }
+.pf-chips span { white-space: nowrap !important; }
+@media (max-width: 1000px) { .pf-brand .pf-chips { flex-wrap: wrap; max-width: none; } }
+
+/* ===== light mint background with a dot/ring pattern (replaces the cyan plus-sign pattern) ===== */
+.band,
+.lp-sec[style*="--mist"] {
+  background-color: #ECF9F3 !important;
+  background-image: url("../img/pattern-dots.svg") !important;
+}
+.lp-clinic { background: linear-gradient(180deg, #fff 0%, #ECF9F3 100%) !important; }
+.lp-clinic::before { background: url("../img/pattern-dots.svg") !important; opacity: .8; }
