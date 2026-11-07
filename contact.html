@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediQueue — Contact Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/luxe.css">
+<link rel="stylesheet" href="assets/css/extras.css"><link rel="stylesheet" href="assets/css/calm.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      MediQueue
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="queue.html">Queue Status</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html" aria-current="page">Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a href="login.html" class="btn btn-ghost js-auth-link">Log in</a>
+      <a href="login.html?tab=register" class="btn btn-primary">Register</a>
+    </div>
+    <button class="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="page-banner"><div class="container"><span class="kicker">Contact us</span><h1>Contact the clinic</h1></div><img class="pb-art" src="assets/img/art-contact.svg" alt="" aria-hidden="true"><svg class="pulse" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40h430l24-30 34 62 30-52 22 20h660" pathLength="1"/></svg></div>
+
+<main>
+  <section class="section ct-section" id="contact">
+    <div class="container ct-wrap">
+      <aside class="ct-side reveal">
+        <span class="kicker">Contact us</span>
+        <h2>Talk to the clinic</h2>
+        <p class="ct-lede">Questions about an appointment or the queue? Reach the San Isidro campus clinic any of these ways.</p>
+        <div class="ct-cards">
+          <a class="ct-card" href="https://www.google.com/maps/search/?api=1&query=Tarlac+State+University+Romulo+Blvd+Tarlac+City" target="_blank" rel="noopener"><span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><h3>Visit us</h3><p>San Isidro Campus Clinic, Tarlac State University<br>Romulo Blvd, Tarlac City, 2300</p></div></a>
+          <a class="ct-card" href="tel:0459820110"><span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><div><h3>Call us</h3><p>(045) 982-0110<br>Mon–Fri, 8:00 AM–5:00 PM</p></div></a>
+          <a class="ct-card" href="mailto:clinic@tsu.edu.ph"><span class="ct-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><div><h3>Email us</h3><p>clinic@tsu.edu.ph<br>We reply within 1–2 business days</p></div></a>
+        </div>
+        <div class="ct-hours"><span class="ct-open" id="ctOpen"><i></i><span id="ctOpenText">Checking hours…</span></span><span>Mon–Fri · 8:00 AM–5:00 PM</span></div>
+      </aside>
+      <div class="ct-msg-art reveal"><img src="assets/img/clinic.svg" alt="Illustration of the campus clinic building"><span class="chip c1">✚ Walk-ins welcome</span><span class="chip c2">Mon–Fri · 8 AM–5 PM</span></div>
+    </div>
+    <div class="container"><div class="ct-alert reveal"><div class="ct-alert-text"><b>Emergency?</b><span>Do not wait for an appointment. Go to the nearest hospital or call the national emergency hotline.</span></div><a class="ct-911" href="tel:911" aria-label="Call 911 now"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call 911</a></div></div>
+  </section>
+</main>
+<script>
+(function(){
+  const d=new Date(),day=d.getDay(),m=d.getHours()*60+d.getMinutes(),open=day>=1&&day<=5&&m>=480&&m<1020,el=document.getElementById("ctOpen");
+  el.classList.add(open?"on":"off");
+  document.getElementById("ctOpenText").textContent=open?"Open now":"Closed right now";
+})();
+</script>
+
+<footer class="site-footer pro-footer">
+  <div class="container">
+    <div class="pf-top">
+      <div class="pf-brand">
+        <a href="index.html" class="brand"><span class="brand-mark" aria-hidden="true"></span>MediQueue</a>
+        <p>Reserve a 30-minute visit with the Tarlac State University campus clinic, follow your queue number and skip the long wait.</p>
+        <div class="pf-chips"><span>30-min slots</span><span>Live queue</span><span>Online booking up to 60 days ahead</span></div>
+      </div>
+      <nav class="pf-col" aria-label="Footer">
+        <h4>Quick links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="appointment.html">Appointments</a></li>
+          <li><a href="queue.html">Queue Status</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <div class="pf-col">
+        <h4>Clinics</h4>
+        <ul>
+          <li>OB-GYNE</li>
+          <li>Pediatrics</li>
+          <li>Dental</li>
+          <li>General Check-up</li>
+        </ul>
+      </div>
+      <div class="pf-col">
+        <h4>Hours</h4>
+        <ul class="pf-contact">
+          <li><span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>Mon–Fri, 8:00 AM–5:00 PM<br><small>General Check-up also on Saturdays</small></span></li>
+        </ul>
+      </div>
+      <div class="pf-col">
+        <h4>Contact</h4>
+        <ul class="pf-contact">
+          <li><span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg></span><span>San Isidro Campus Clinic<br>Tarlac State University<br>Romulo Blvd, Tarlac City, 2300</span></li>
+          <li><span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><a href="tel:+63459820110">(045) 982-0110</a></li>
+          <li><span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><a href="mailto:clinic@tsu.edu.ph">clinic@tsu.edu.ph</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pf-bottom">
+      <p>MediQueue 2026 &copy; Group 5 Case Study NA-3B &middot; Tarlac State University</p>
+      <p>A case-study prototype. Not a substitute for professional medical advice.</p>
+      <a href="#" class="pf-top-btn" data-top>&uarr; <span>Back to top</span></a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/fx.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/extras.js"></script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediQueue — Book an appointment</title>
+<script>
+  /* Booking requires an account — bounce to login before the form ever shows. */
+  (function () {
+    try {
+      var user = JSON.parse(localStorage.getItem("mediqueue_user"));
+      if (!user) window.location.replace("login.html?redirect=appointment.html");
+    } catch (e) {
+      window.location.replace("login.html?redirect=appointment.html");
+    }
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/luxe.css">
+<link rel="stylesheet" href="assets/css/wizard.css">
+<link rel="stylesheet" href="assets/css/extras.css"><link rel="stylesheet" href="assets/css/calm.css">
+</head>
+<body class="wz-body">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      MediQueue
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="appointment.html" aria-current="page">Appointments</a></li>
+        <li><a href="queue.html">Queue Status</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a href="login.html" class="btn btn-ghost js-auth-link">Log in</a>
+      <a href="queue.html" class="btn btn-primary">Check Queue</a>
+    </div>
+    <button class="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<main class="wz container">
+  <aside class="wz-side">
+    <h1>Book Your<br>Appointment</h1>
+    <ol class="wz-steps" id="wzSteps">
+      <li class="active"><span class="wz-dot">1</span><span class="wz-label">Doctor &amp; Consultation</span></li>
+      <li><span class="wz-dot">2</span><span class="wz-label">Date &amp; Time</span></li>
+      <li><span class="wz-dot">3</span><span class="wz-label">Personal Information</span></li>
+      <li><span class="wz-dot">4</span><span class="wz-label">Pre-Appointment Terms</span></li>
+      <li><span class="wz-dot">5</span><span class="wz-label">Confirmation</span></li>
+    </ol>
+  </aside>
+
+  <section class="wz-main">
+    <div class="wz-top" aria-live="polite">
+      <span class="wz-stepcount"><span>Step</span> <b id="wzCur">1</b> <span>of 5</span></span>
+      <span class="wz-stepname" id="wzName"></span>
+    </div>
+    <div class="wz-bar" aria-hidden="true"><i id="wzFill"></i></div>
+    <form id="bookingForm" data-wizard novalidate>
+      <input type="hidden" id="b-department" name="department" value="">
+      <input type="hidden" id="b-service" name="service" value="">
+
+      <!-- Step 1 -->
+      <div class="wz-panel" data-step="1">
+        <h2>Doctor &amp; Consultation</h2>
+        <div class="wz-sect"><span class="wz-sect-n">1</span><span>Choose your doctor</span></div>
+        <div class="field-row">
+          <div class="field" id="f-department">
+            <label for="w-spec">Specialization</label>
+            <div class="wz-select"><select id="w-spec"></select></div>
+            <span class="field-error">Select a specialization.</span>
+          </div>
+          <div class="field">
+            <label for="w-doc">Doctor</label>
+            <div class="wz-select has-avatar"><img id="w-avatar" class="wz-avatar" alt="" hidden><select id="w-doc" disabled><option>Select a specialization first</option></select></div>
+          </div>
+        </div>
+        <div class="wz-sect"><span class="wz-sect-n">2</span><span>Choose consultation type</span></div>
+        <div class="wz-options" id="wzServices" role="radiogroup" aria-label="Consultation type">
+          <p class="wz-empty">Choose a specialization to see the available consultations.</p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="wz-panel" data-step="2" hidden>
+        <h2>Date &amp; Time</h2>
+        <p class="wz-hint" id="wzHours">Pick a preferred date and an open 30-minute slot.</p>
+        <div class="wz-est-banner"><i class="wz-clock" aria-hidden="true"></i><div><span>Estimated time:</span> <strong>15–30</strong> <span>minutes</span><small>Your slot is reserved for 30 minutes.</small></div></div>
+        <div class="wz-sect"><span class="wz-sect-n">1</span><span>Pick a date</span></div>
+        <div class="field-row">
+          <div class="field" id="f-date">
+            <label for="b-date">Preferred date</label>
+            <input type="date" id="b-date" name="date">
+            <span class="field-error">Choose a preferred date.</span>
+          </div>
+        </div>
+        <div class="wz-sect"><span class="wz-sect-n">2</span><span>Pick a time</span></div>
+        <div class="field" id="f-time">
+          <label for="b-time">Preferred time</label>
+          <select id="b-time" name="time" class="wz-select-hidden"><option value="">Select a department and date first</option></select>
+          <div class="wz-slots" id="wzSlots"></div>
+          <div class="wz-legend" aria-hidden="true"><span class="lg-av">Available</span><span class="lg-sel">Selected</span><span class="lg-bk">Unavailable</span></div>
+          <span class="field-error">Choose an available time.</span>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="wz-panel" data-step="3" hidden>
+        <h2>Personal Information</h2>
+        <div class="wz-sect"><span class="wz-sect-n">1</span><span>Patient details</span></div>
+        <div class="field-row">
+          <div class="field" id="f-fullname">
+            <label for="b-fullname">Full name</label>
+            <input type="text" id="b-fullname" name="fullname" placeholder="Juan Dela Cruz">
+            <span class="field-error">Enter your first and last name (letters only).</span>
+          </div>
+          <div class="field" id="f-contact">
+            <label for="b-contact">Contact number</label>
+            <input type="tel" id="b-contact" name="contact" placeholder="09XX XXX XXXX">
+            <span class="field-error">Enter a valid PH mobile number, e.g. 0917 123 4567.</span>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field" id="f-age">
+            <label for="b-age">Age</label>
+            <input type="number" id="b-age" name="age" min="1" max="120" step="1" placeholder="e.g. 21">
+            <span class="field-error">Enter your age as a whole number from 1 to 120.</span>
+          </div>
+          <div class="field" id="f-gender">
+            <label for="b-gender">Gender</label>
+            <select id="b-gender" name="gender">
+              <option value="">Select gender</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+            <span class="field-error">Select your gender.</span>
+          </div>
+        </div>
+        <div class="wz-sect"><span class="wz-sect-n">2</span><span>Visit details</span></div>
+        <div class="field" id="f-notes">
+          <label for="b-notes">Reason for visit</label>
+          <textarea id="b-notes" name="notes" placeholder="Briefly describe your concern or reason for the visit"></textarea>
+          <span class="field-error">Tell us your reason for the visit.</span>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="wz-panel" data-step="4" hidden>
+        <h2>Pre-Appointment Terms</h2>
+        <div class="wz-summary" id="wzSummary"></div>
+        <ul class="wz-terms">
+          <li>Arrive 10 minutes before your selected time.</li>
+          <li>Each slot is 30 minutes, so doctors have a breather between patients.</li>
+          <li>Estimated time with the doctor is 15–30 minutes.</li>
+          <li>Check your status or cancel from the Queue Status page. Cancelling closes 30 minutes before your appointment.</li>
+          <li>Bring a valid ID for verification at the clinic.</li>
+        </ul>
+        <label class="wz-agree"><input type="checkbox" id="wzAgree"> I confirm these details are correct and I agree to the reminders above. The clinic will use my contact number to reach me.</label>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="wz-panel" data-step="5" hidden>
+        <h2>Confirmation</h2>
+        <div class="confirm-banner" id="confirmBanner">
+          <div>
+            <strong id="confirmTitle">Appointment booked!</strong>
+            <span id="confirmDetail">Your queue number is below.</span>
+          </div>
+        </div>
+        <div class="wz-done-actions">
+          <a href="queue.html" class="wz-btn wz-btn-primary">View Queue Status</a>
+          <button type="button" class="wz-btn wz-btn-ghost" id="wzAnother">Book another appointment</button>
+        </div>
+      </div>
+
+      <div class="wz-footer" id="wzFooter">
+        <button type="button" class="wz-btn wz-btn-ghost" id="wzBack" hidden>Back</button>
+        <button type="button" class="wz-btn wz-btn-primary" id="wzNext" disabled>Next</button>
+        <button type="submit" class="wz-btn wz-btn-primary" id="wzConfirm" hidden disabled>Confirm Appointment</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<section class="section schedule-section" id="schedule">
+  <div class="container">
+    <div class="section-head">
+      <h2>Clinic Schedule</h2>
+      <p>Current clinic hours per department. Walk-ins follow the same schedule, subject to slot availability.</p>
+    </div>
+
+    <div class="schedule-table-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>Department / Doctor</th>
+            <th>Days</th>
+            <th>Hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="dept">OB-GYNE — Dr. Canono</td>
+            <td>Monday – Friday</td>
+            <td>8:00 AM – 12:00 NN, 1:00 PM – 4:00 PM</td>
+          </tr>
+          <tr>
+            <td class="dept">Pediatrics — Dr. Jimenez</td>
+            <td>Monday, Wednesday, Friday</td>
+            <td>9:00 AM – 12:00 NN, 1:00 PM – 3:00 PM</td>
+          </tr>
+          <tr>
+            <td class="dept">Dental — Dr. Labisa</td>
+            <td>Tuesday, Thursday</td>
+            <td>8:00 AM – 12:00 NN</td>
+          </tr>
+          <tr>
+            <td class="dept">General Check-up — Dr. Jose</td>
+            <td>Monday – Saturday</td>
+            <td>8:00 AM – 4:00 PM</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="schedule-note">Schedules may change on holidays and during staff meetings. Please check the Queue Status page for real-time availability before heading to the clinic.</p>
+  </div>
+</section>
+
+<footer class="site-footer pro-footer">
+  <div class="container">
+    <div class="pf-top">
+      <div class="pf-brand">
+        <a href="index.html" class="brand"><span class="brand-mark" aria-hidden="true"></span>MediQueue</a>
+        <p>Reserve a 30-minute visit with the Tarlac State University campus clinic, follow your queue number and skip the long wait.</p>
+        <div class="pf-chips"><span>30-min slots</span><span>Live queue</span><span>Online booking up to 60 days ahead</span></div>
+      </div>
+      <nav class="pf-col" aria-label="Footer">
+        <h4>Quick links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="appointment.html">Appointments</a></li>
+          <li><a href="queue.html">Queue Status</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <div class="pf-col">
+        <h4>Clinics</h4>
+        <ul>
+          <li>OB-GYNE</li>
+          <li>Pediatrics</li>
+          <li>Dental</li>
+          <li>General Check-up</li>
+        </ul>
+      </div>
+      <div class="pf-col">
+        <h4>Hours</h4>
+        <ul class="pf-contact">
+          <li><span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>Mon–Fri, 8:00 AM–5:00 PM<br><small>General Check-up also on Saturdays</small></span></li>
+        </ul>
+      </div>
+      <div class="pf-col">
+        <h4>Contact</h4>
+        <ul class="pf-contact">
+          <li><span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg></span><span>San Isidro Campus Clinic<br>Tarlac State University<br>Romulo Blvd, Tarlac City, 2300</span></li>
+          <li><span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><a href="tel:+63459820110">(045) 982-0110</a></li>
+          <li><span class="pf-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><a href="mailto:clinic@tsu.edu.ph">clinic@tsu.edu.ph</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pf-bottom">
+      <p>MediQueue 2026 &copy; Group 5 Case Study NA-3B &middot; Tarlac State University</p>
+      <p>A case-study prototype. Not a substitute for professional medical advice.</p>
+      <a href="#" class="pf-top-btn" data-top>&uarr; <span>Back to top</span></a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/fx.js"></script>
+<script src="assets/js/wizard.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/extras.js"></script>
+</body>
+</html>
